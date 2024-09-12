@@ -30,61 +30,42 @@ namespace spesium {
             };
 
            public:
-            /**
-   * @brief 実行関数
-   */
+            /// @brief 実行関数
             virtual void Exec();
 
-            /**
-   * @brief 描画関数
-   */
+            /// @brief 描画関数
             virtual void Draw() = 0;
 
            protected:
-            /**
-   * @brief モデル読み込み関数
-   */
+            /// @brief モデル読み込み関数
             void LoadModel();
 
-            /**
-   * @brief モデル解放関数
-   */
+            /// @brief モデル解放関数
             void ReleaseModel();
 
-            /**
-   * @brief 移動関数
-   */
+            /// @brief 移動関数
             void Move();
 
-            /**
-   * @brief ジャンプ関数
-   */
+            /// @brief ジャンプ関数
             void Jump();
 
-            /*
-   * @brief 向き変更
-   */
+            /// @brief 向き変更
             void UpdateDirection();
 
-            /*
-   * @brief 重力関数
-   */
+            /// @brief 重力関数
             void Gravity();
 
-            /*
-   * @brief 立ってるかチェック
-   */
+            /// @brief 立ってるかチェック
             bool IsStanding() const;
 
-            /**
-   * @brief 運動摩擦関数
-   */
+            /// @brief 運動摩擦関数
             void KineticFriction();
 
-            /*
-   * @brief 座標更新関数
-   */
+            /// @brief 座標更新関数
             void UpdatePos();
+
+            /// @breif 吹っ飛びの計算
+            void BlowOffCalculation();
 
            protected:
             /// @brief キーボード入力
@@ -122,6 +103,8 @@ namespace spesium {
             bool isStandingGround { false };
             /// @brief ダウンしたか(倒れたか)
             bool isKnockdown { false };
+            /// @brief 接触したか
+            bool isCollision { false };
 
             /// @brief モンスターモデル格納用
             int32_t monsterModel { 0 };

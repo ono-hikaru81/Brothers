@@ -1,7 +1,9 @@
-﻿
+
 #include <Character/CharacterBase.h>
 #include <DxLib.h>
 #include <Utility/Function.h>
+
+#include <cmath>
 
 namespace spesium {
     namespace character {
@@ -57,6 +59,16 @@ namespace spesium {
 
                 DisabledBelow( reverseMaxSpeed, *velocity.X );
             }
+
+            // 接触
+            if ( inputManager.lock()->IsKeyPushed( KEY_INPUT_SPACE ) || inputManager.lock()->IsKeyHeld( KEY_INPUT_SPACE ) ) {
+                isCollision = true;
+            }
+            else {
+                isCollision = false;
+            }
+
+            BlowOffCalculation();
         }
 
         void CharacterBase::Jump() {
@@ -115,6 +127,18 @@ namespace spesium {
             // Y座標
             moveVec.Y = velocity.Y;
             status.pos.Y += moveVec.Y;
+        }
+
+        void CharacterBase::BlowOffCalculation() {
+            if ( !isCollision ) { return; }
+
+            static double initVelocity { 10.0 };  // 初速
+            static double pi { 3.14 };  // 円周率
+            static double degree { 60.0 };  // 角度
+            static double radian { 30 * ( 3.14 / 180 ) };  // ラジアン角
+
+            velocity.X = initVelocity * cosh( radian );
+            velocity.Y = initVelocity * sinh( radian );
         }
     }  // namespace character
 }  // namespace spesium
